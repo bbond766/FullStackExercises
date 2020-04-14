@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Stats = (props) =>{
+const Statistics = (props) =>{
   return(
     <div>
        {props.text}{props.number}
@@ -35,12 +35,12 @@ const App = () => {
       <button onClick={handleNeutralClick}>neutral</button>
       <button onClick={handleBadClick}>bad</button>
       <h1>Statistics</h1>
-      <Stats text={'Good: '} number = {good}/>
-      <Stats text={'Neutral: '} number = {neutral}/>
-      <Stats text={'Bad: '} number = {bad}/>
-      <Stats text={'All: '} number = {good+neutral+bad}/>
-      <Stats text={'Average: '} number = {(good-bad)/(good+bad+neutral)}/>
-      <Stats text={'Positive: '} number = {100*good/(good+bad+neutral) + ' %'}/>
+      <Statistics text={'Good: '} number = {good}/>
+      <Statistics text={'Neutral: '} number = {neutral}/>
+      <Statistics text={'Bad: '} number = {bad}/>
+      <Statistics text={'All: '} number = {good+neutral+bad}/>
+      <Statistics text={'Average: '} number = {(good-bad)/(good+bad+neutral)}/>
+      <Statistics text={'Positive: '} number = {100*good/(good+bad+neutral) + ' %'}/>
 
     </div>
   )
