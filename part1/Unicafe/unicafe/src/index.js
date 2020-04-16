@@ -2,27 +2,17 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const Statistics = (props) =>{
-  if(props.clicks === 0){
-    return(
-      <div>
-        No feedback given
-      </div>
-      );
-  }
-  var outputs = []
-  for (var i = 0; i < 6; i++) {
-    outputs = outputs.concat([props.text[i] + props.number[i]])
+  return(
+    <div>
+     {props.text} {props.value} 
+     </div>
+     )
+}
 
-    console.log(props.text[i] + props.number[i])
-  }
-  console.log(outputs)
-      return(
-        <div>
-        <ul>
-          {outputs.map(output => {return(<li>{output}</li>)})}
-        </ul>
-        </div>
-        );
+const Button = (props) =>{
+  return(
+  <button onClick={props.click}>{props.text}</button>
+  )
 }
 
 
@@ -32,9 +22,7 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
   const [numClicks, setClicks] = useState([])
-  const text = ['Good: ', 'Neutral: ', 'Bad: ','All: ','Average: ', 'Positive: ']
   let total = good+bad+neutral
-  const numbers = [good, bad, neutral, total, (good-bad)/total, 100*good/(total) + ' %']
 
   const handleGoodClick = () =>{
     setGood(good+1)
@@ -56,11 +44,16 @@ const App = () => {
   return (        
     <div>
       <h1>Give Feedback</h1>
-      <button onClick={handleGoodClick}>good</button>
-      <button onClick={handleNeutralClick}>neutral</button>
-      <button onClick={handleBadClick}>bad</button>
+      <Button click={handleGoodClick} text={'good'}/>
+      <Button click={handleNeutralClick} text = {'neutral'}/>
+      <Button click={handleBadClick} text = {'bad'}/>
       <h1>Statistics</h1>
-      <Statistics text={text} number={numbers} clicks={numberClicks}/>
+      <Statistics text={'Good: '} value={good}/>
+      <Statistics text={'Neutral: '} value={bad}/>
+      <Statistics text={'Bad: '} value={neutral}/>
+      <Statistics text={'All: '} value={total}/>
+      <Statistics text={'Average: '} value={(good-bad)/total}/>
+      <Statistics text={'Positive: '} value={100*good/(total) + ' %'}/>
     </div>
   )
 }
