@@ -23,19 +23,20 @@ const Header = (props) =>{
 
 const Total = ({course}) =>{
 	let total = 0
+	let totalArray = []
 	let message1 = "Total of "
 	let message2 = " exercises"
-	return (course.map(course =>(
-		total += course.exercises
-			
-	)),
-
+	totalArray = course.map(course =>(
+		course.exercises			
+	))
+	total = totalArray.reduce((s,p) => (s+p))
+	return(
 	<div>
 			<p>
 				<b>{message1} {total} {message2}</b>
 			</p>
 	</div>
-	);
+	)
 }
 
 const Part = (props) =>{
