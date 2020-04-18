@@ -12,14 +12,19 @@ const App = () => {
 
 const addName = (event) =>{
   event.preventDefault()
-  console.log('button clicked', event.target)
   const nameObject = {
     name: newName
     //number:1234567890
   }
-
-  setPersons(persons.concat(nameObject))
-  setNewName('')
+  for (var i = 0; i <persons.length; i++) {
+   if(persons[i].name === nameObject.name){
+      alert(`${newName} is already added to the phonebook`)
+      setNewName('')
+      return
+  }
+}
+    setPersons(persons.concat(nameObject))
+    setNewName('') 
 }
 let displayNames = persons.map(persons =>(
           <li key = {persons.name}>{persons.name}</li>
