@@ -9,6 +9,13 @@ const App = () => {
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [showAll, setShowAll] = useState(true)
+
+  var nameToShow = persons
+
+  var displayNames = nameToShow.map(persons =>(
+          <li key = {persons.name}>{persons.name} {persons.number}</li>
+        ))
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -36,14 +43,26 @@ const App = () => {
     setNewName('') 
     setNewNumber('')
 }
-let displayNames = persons.map(persons =>(
-          <li key = {persons.name}>{persons.name} {persons.number}</li>
-        ))
+
+const filterPerson = (event) =>{
+  setShowAll(false)
+  console.log(nameToShow)
+  nameToShow = showAll
+  ? persons
+  : persons.filter(person => person.name.includes(event.target.value))
+  setPersons(nameToShow)
+}
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <form>
+        <div> Filter: <input
+            onChange = {filterPerson}/>
+        </div>
+      </form>
         <div>
+        <h2>Add a New Person</h2>
         <form onSubmit={addPerson}>
           <div>name: <input
             value={newName}
