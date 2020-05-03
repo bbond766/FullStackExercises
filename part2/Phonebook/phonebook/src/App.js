@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import RenderPhoneBook from './Components/RenderPhoneBook'
+import Filter from './Components/Filter'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -13,10 +15,6 @@ const App = () => {
 
   var nameToShow = persons
 
-  var displayNames = nameToShow.map(persons =>(
-          <li key = {persons.name}>{persons.name} {persons.number}</li>
-        ))
-
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -25,7 +23,7 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
-  const addPerson = (event) =>{
+  const addPerson = ({event},{persons}) =>{
     event.preventDefault()
     const nameObject = {
       name: newName,
@@ -45,12 +43,8 @@ const App = () => {
 }
 
 const filterPerson = (event) =>{
-  setShowAll(false)
-  console.log(nameToShow)
-  nameToShow = showAll
-  ? persons
-  : persons.filter(person => person.name.includes(event.target.value))
-  setPersons(nameToShow)
+  setShowAll(false)  
+  setPersons(Filter({showAll},{persons},{event}))
 }
 
   return (
@@ -58,7 +52,7 @@ const filterPerson = (event) =>{
       <h2>Phonebook</h2>
       <form>
         <div> Filter: <input
-            onChange = {filterPerson}/>
+          onChange = {filterPerson}/>
         </div>
       </form>
         <div>
@@ -75,10 +69,7 @@ const filterPerson = (event) =>{
           <div><button type="submit">add</button></div>
         </form>
         </div>
-      <h2>Numbers</h2>
-      <ul>
-        {displayNames}
-      </ul>
+        <RenderPhoneBook nameToShow = {nameToShow} persons ={persons}></RenderPhoneBook>
     </div>
   )
 }
