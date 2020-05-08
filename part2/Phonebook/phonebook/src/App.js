@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import RenderPhoneBook from './Components/RenderPhoneBook'
 import Filter from './Components/Filter'
+import personsService from './Services/persons'
 import axios from 'axios'
 
 const App = () => {
@@ -12,10 +13,10 @@ const App = () => {
   var nameToShow = persons
 
   useEffect(() => {
-    axios
-    .get('http://localhost:3001/persons')
+    personsService
+    .getAll()
     .then(response =>{
-      setPersons(response.data)
+      setPersons(response)
     })
   },[])
 
@@ -27,23 +28,26 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
-  const addPerson = ({event},{persons}) =>{
+  const addPerson = (event) =>{
     event.preventDefault()
     const nameObject = {
       name: newName,
       number:newNumber
-  }
+    }
   for (var i = 0; i <persons.length; i++) {
    if(persons[i].name === nameObject.name){
       alert(`${newName} is already added to the phonebook`)
-      setNewName('')
-      setNewNumber('')
       return
+    }
   }
-}
-    setPersons(persons.concat(nameObject))
-    setNewName('') 
-    setNewNumber('')
+    personsService
+        .create(nameObject)
+        .then(response => {
+          setPersons(persons.concat(nameObject))
+          setNewName('') 
+          setNewNumber('')
+        })
+
 }
 
 const filterPerson = (event) =>{
