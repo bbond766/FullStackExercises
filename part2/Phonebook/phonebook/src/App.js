@@ -2,7 +2,6 @@ import React, { useState, useEffect} from 'react'
 import RenderPhoneBook from './Components/RenderPhoneBook'
 import Filter from './Components/Filter'
 import personsService from './Services/persons'
-import axios from 'axios'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -55,6 +54,19 @@ const filterPerson = (event) =>{
   setPersons(Filter({showAll},{persons},{event}))
 }
 
+const deletePerson = (props) => {
+  let personId = persons.find(function(person){
+    if (person.name === props){
+        return(person.id)
+    }
+    return (0)
+  })
+  let message = "Delete " + props + "?"
+  if(window.confirm(message)){
+    personsService.remove(personId.id)
+  }
+}
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -77,7 +89,7 @@ const filterPerson = (event) =>{
           <div><button type="submit">add</button></div>
         </form>
         </div>
-        <RenderPhoneBook nameToShow = {nameToShow} persons ={persons}></RenderPhoneBook>
+        <RenderPhoneBook nameToShow = {nameToShow} deletePerson = {deletePerson}/>
     </div>
   )
 }

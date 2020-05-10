@@ -2,8 +2,8 @@ import React from 'react'
 import RenderPersonDetails from './RenderPersonDetails'
 
 
-const RenderPhoneBook = ({nameToShow},{persons}) => {
-	let displayNames = RenderPersonDetails({nameToShow},{persons})
+const RenderPhoneBook = ({nameToShow, deletePerson}) => {
+	let displayNames = RenderPersonDetails({nameToShow, deletePerson})
 
 	return(
 		<div>
@@ -14,7 +14,5 @@ const RenderPhoneBook = ({nameToShow},{persons}) => {
     	</div>
     )
 }
-
-
 
 export default RenderPhoneBook
